@@ -1,4 +1,4 @@
-# Projeto: Virtual Try-On (VTON)
+# Projeto: LeadTech - Estilista Inteligente
 
 ## Objetivo Principal
 
