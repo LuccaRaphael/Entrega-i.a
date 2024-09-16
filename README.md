@@ -156,7 +156,7 @@ O sistema finaliza o processo ajustando a roupa à pose da pessoa e gera a image
 ### **Por que essa arquitetura foi escolhida?**
 A combinação de **redes convolucionais para segmentação** e **PoseNet para detecção de pontos-chave** foi escolhida pela sua robustez e eficiência. Além disso, a vasta quantidade de dados disponível nos datasets utilizados garantiu um bom desempenho em diferentes tipos de imagens, mantendo a precisão tanto na segmentação quanto na composição final.
 
-<img src="Imagens\vritual.png" alt="Texto Alternativo">
+<img src="Imagens\virtual.png" alt="Texto Alternativo">
 
 
 ---
