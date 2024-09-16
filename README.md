@@ -92,6 +92,9 @@ Na fase final, o sistema já treinado utiliza os embeddings gerados para fornece
 #### **Justificativa da Arquitetura**:
 A arquitetura foi desenhada para balancear **precisão** e **eficiência**. O uso do YOLOv5 garante detecção rápida e precisa, enquanto o AutoEncoder reduz a complexidade computacional na busca por similaridade, mantendo a alta precisão de recomendações.
 
+![Processo] Imagens\recomenda.png)
+
+
 
 ## **3. Base de Dados Utilizada**
 
@@ -153,6 +156,9 @@ O sistema finaliza o processo ajustando a roupa à pose da pessoa e gera a image
 
 ### **Por que essa arquitetura foi escolhida?**
 A combinação de **redes convolucionais para segmentação** e **PoseNet para detecção de pontos-chave** foi escolhida pela sua robustez e eficiência. Além disso, a vasta quantidade de dados disponível nos datasets utilizados garantiu um bom desempenho em diferentes tipos de imagens, mantendo a precisão tanto na segmentação quanto na composição final.
+
+
+![Processo] Imagens\vritual.png)
 
 ---
 
