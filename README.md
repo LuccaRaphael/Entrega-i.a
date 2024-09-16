@@ -81,7 +81,7 @@ A escolha do **YOLOv5** foi baseada na sua capacidade de detecção eficiente em
 - **Justificativa**: Este dataset foi escolhido pela sua riqueza em exemplos de moda variados, facilitando o treinamento de modelos de detecção e embeddings com alta precisão.
 - **Link**: https://github.com/eileenforwhat/complete-the-look-dataset
 
-- 
+  
 
 ## **Parte 2: LeadTech - Estilista Inteligente: Virtual Try-On (VTON)**
 
