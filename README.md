@@ -99,7 +99,7 @@ O protótipo conta com as seguintes funcionalidades:
 A arquitetura foi desenvolvida em três fases: **coleta de dados**, **modelagem de machine learning** e **fase de inferência**, onde o sistema serve as recomendações com base em similaridade visual.
 
 ### **2.1 Coleta e Preparação dos Dados**
-Para treinar o modelo de detecção de objetos e o modelo de embeddings, foram utilizados datasets públicos contendo imagens de moda. O dataset principal foi retirado do paper "Bootstrapping Complete the Look at Pinterest" e inclui mais de **12.000 imagens de estilo** com caixas delimitadoras, usadas para identificar objetos de moda.
+Para treinar o modelo de detecção de objetos e o modelo de embeddings, foram utilizados datasets públicos contendo imagens de moda. O dataset principal foi retirado do paper "Complete the Look Dataset" e inclui mais de **12.000 imagens de estilo** com caixas delimitadoras, usadas para identificar objetos de moda.
 
 Os passos para preparação dos dados foram:
 - **Limpeza e Transformação**: Os dados foram organizados utilizando **Pandas**, extraindo as colunas relevantes e removendo strings vazias.
