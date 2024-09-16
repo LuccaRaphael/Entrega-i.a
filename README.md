@@ -41,38 +41,57 @@ O protótipo conta com as seguintes funcionalidades:
 - **AutoEncoder**: Rede neural utilizada para gerar embeddings visuais dos itens detectados.
 - **Streamlit**: Utilizado para criar a interface de demonstração.
 
----
-
 ## **2. Detalhamento da Arquitetura de IA**
 
-A arquitetura foi desenvolvida em três fases: **coleta de dados**, **modelagem de machine learning** e **fase de inferência**, onde o sistema serve as recomendações com base em similaridade visual.
+A arquitetura do sistema de recomendações personalizadas foi desenvolvida em três fases interdependentes: **coleta e preparação de dados**, **modelagem de machine learning** e **fase de inferência**. Cada uma dessas fases desempenha um papel crucial no funcionamento do sistema, desde a coleta de dados até a recomendação final ao usuário, baseada em similaridade visual.
 
 ### **2.1 Coleta e Preparação dos Dados**
-Para treinar o modelo de detecção de objetos e o modelo de embeddings, foram utilizados datasets públicos contendo imagens de moda. O dataset principal foi retirado do paper "Complete the Look Dataset" e inclui mais de **12.000 imagens de estilo** com caixas delimitadoras, usadas para identificar objetos de moda.
+A primeira fase envolve a **coleta de dados** e sua **preparação** para treinar os modelos de detecção de objetos e de embeddings. Utilizamos datasets públicos com imagens de moda, sendo o principal deles o **Complete the Look Dataset**, que contém mais de **12.000 imagens de estilo** com caixas delimitadoras. Essas imagens são usadas para identificar e categorizar itens de moda, como roupas e acessórios.
 
-Os passos para preparação dos dados foram:
-- **Limpeza e Transformação**: Os dados foram organizados utilizando **Pandas**, extraindo as colunas relevantes e removendo strings vazias.
-- **Balanceamento de Classes**: O dataset foi equilibrado, com 1.000 imagens por categoria de moda, resultando em um total de **15.657 objetos e 9.235 imagens**.
-- **Correção de Imagens Corrompidas**: Um script do **ImageMagick** foi utilizado para corrigir imagens corrompidas.
-- **Criação dos Arquivos de Treinamento**: Cada imagem recebeu um arquivo `.txt` contendo as coordenadas e classes dos objetos para treinamento do modelo de detecção.
+#### **Etapas do processo:**
+- **Limpeza e Transformação**: Os dados brutos coletados foram organizados utilizando a biblioteca **Pandas**, onde foram extraídas as colunas relevantes e removidos valores nulos ou strings vazias. Isso garante que o modelo seja treinado com dados consistentes e de alta qualidade.
+- **Balanceamento de Classes**: Como em muitos datasets, havia uma desproporção entre as diferentes categorias de moda. Para garantir que o modelo não tenha viés em favor de certas categorias, aplicamos técnicas de balanceamento, resultando em um conjunto equilibrado de **15.657 objetos** distribuídos em **9.235 imagens**, com cerca de **1.000 imagens por categoria de moda**.
+- **Correção de Imagens Corrompidas**: Utilizamos um script com **ImageMagick** para verificar e corrigir imagens corrompidas, evitando que o treinamento falhe ou sofra com entradas inválidas.
+- **Criação dos Arquivos de Anotação**: Cada imagem recebeu um arquivo `.txt` associado, contendo as coordenadas de suas caixas delimitadoras e a classe dos objetos identificados. Esses arquivos são essenciais para treinar o modelo de detecção de objetos.
 
 ### **2.2 Modelo de Detecção de Objetos**
-Para detectar os itens de moda nas imagens, foi utilizado o modelo **YOLOv5** pré-treinado, ajustado para identificar roupas e acessórios em imagens de moda. O resultado foi:
-- **Precisão (Precision)**: 54.8
-- **Recall**: 64.8
-- **mAP** (Mean Average Precision): 60.9
+Com os dados preparados, a próxima fase é a construção e treinamento do **modelo de detecção de objetos**, responsável por identificar peças de moda em imagens. Utilizamos o **YOLOv5** pré-treinado, ajustado especificamente para detecção de roupas e acessórios.
+
+#### **Funcionamento**:
+- **Treinamento**: O modelo YOLOv5 foi ajustado com os dados anotados da fase anterior. Ele aprende a detectar objetos de moda em diferentes cenários e posições, gerando caixas delimitadoras que identificam e segmentam os itens nas imagens.
+- **Resultados**: Após o treinamento, o modelo apresentou os seguintes resultados:
+  - **Precisão (Precision)**: 54.8
+  - **Recall**: 64.8
+  - **mAP** (Mean Average Precision): 60.9
+
+Esses resultados indicam que o modelo consegue detectar objetos com uma boa taxa de acerto, equilibrando precisão e recall.
 
 ### **2.3 Modelo de Embeddings**
-O modelo de embeddings utiliza uma arquitetura de **AutoEncoder** para transformar as imagens dos itens detectados em representações vetoriais. O encoder e decoder foram construídos com **camadas convolucionais** para capturar as características visuais. O vetor gerado no "bottleneck" do AutoEncoder é um **embedding de 512 dimensões**, que serve como base para a recomendação.
+Após a detecção dos objetos de moda, cada item é transformado em uma **representação vetorial** (embedding) por meio de um **AutoEncoder**. Esta representação captura as características visuais dos itens, como cor, textura e forma, permitindo que o sistema compare visualmente diferentes peças de moda.
 
-Os resultados do modelo de embeddings foram:
-- **Baseline (4096-d)**: Tamanho do índice 163.8 MB, mAP de 0.44
-- **+Layer (512-d)**: Tamanho do índice 25 MB, mAP de 0.53 (Modelo utilizado no sistema).
+#### **Funcionamento**:
+- **Arquitetura do AutoEncoder**: O modelo de AutoEncoder é composto por um **encoder**, que comprime a imagem do item detectado em um vetor de 512 dimensões (embedding), e um **decoder**, que reconstrói a imagem a partir desse vetor.
+- **Embedding de 512 Dimensões**: O "bottleneck" do AutoEncoder, onde ocorre a compressão, é o ponto onde a imagem é convertida em uma **representação vetorial** de 512 dimensões. Essa compactação permite uma busca eficiente de itens semelhantes com base em suas características visuais.
+- **Comparação Visual**: Os embeddings gerados são utilizados para calcular a similaridade entre diferentes peças. Quanto mais próximo o vetor de um produto estiver de outro, mais semelhante ele é visualmente.
 
-### **Justificativa da Escolha dos Modelos**
-A escolha do **YOLOv5** foi baseada na sua capacidade de detecção eficiente em tempo real, enquanto o **AutoEncoder** com embeddings de 512 dimensões foi selecionado pela sua capacidade de representar visualmente os itens com alta precisão, mantendo a eficiência computacional.
+#### **Resultados do Modelo de Embeddings**:
+- **Baseline (4096-d)**: Índice de tamanho 163.8 MB, mAP de 0.44.
+- **+Layer (512-d)**: Índice de tamanho 25 MB, mAP de 0.53 (modelo utilizado no sistema).
 
----
+A escolha pelo embedding de 512 dimensões foi feita para garantir um equilíbrio entre **precisão** e **eficiência computacional**, já que a redução no tamanho do vetor diminuiu o tempo de inferência e o espaço de armazenamento sem sacrificar significativamente a precisão.
+
+### **2.4 Fase de Inferência e Recomendações**
+Na fase final, o sistema já treinado utiliza os embeddings gerados para fornecer **recomendações personalizadas**. Quando o usuário faz upload de uma imagem, o modelo de detecção de objetos (YOLOv5) identifica as peças de moda na imagem e, em seguida, o modelo de embeddings compara essas peças com o catálogo da loja.
+
+#### **Processo de Inferência**:
+1. **Detecção do Item**: O YOLOv5 detecta e segmenta a peça de vestuário ou acessório.
+2. **Geração do Embedding**: O AutoEncoder transforma o item detectado em um vetor de 512 dimensões.
+3. **Busca por Similaridade**: O vetor gerado é comparado com os vetores já armazenados no sistema, e os itens mais semelhantes visualmente são retornados como sugestões.
+4. **Apresentação ao Usuário**: As recomendações são apresentadas via interface **Streamlit**, permitindo uma navegação rápida e intuitiva.
+
+#### **Justificativa da Arquitetura**:
+A arquitetura foi desenhada para balancear **precisão** e **eficiência**. O uso do YOLOv5 garante detecção rápida e precisa, enquanto o AutoEncoder reduz a complexidade computacional na busca por similaridade, mantendo a alta precisão de recomendações.
+
 
 ## **3. Base de Dados Utilizada**
 
