@@ -9,7 +9,7 @@ O objetivo principal do projeto **LeadTech - Estilista Inteligente** é oferecer
 
 Abaixo estão as documentações detalhadas de cada parte do projeto.
 
-**Link do Vídeo do Protótipo:** [Aqui](https://www.youtube.com/watch?v=6UDhFYrq2KI)
+**Link do Vídeo :** [Aqui](https://www.youtube.com/watch?v=6UDhFYrq2KI)
 
 ---
 
