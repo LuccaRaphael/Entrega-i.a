@@ -31,8 +31,8 @@ O processo de composição final ocorre no script `main.py`, onde a máscara da 
 
 ### 3. Apresentação da Base de Dados Utilizada
 As bases de dados utilizadas para treinamento e teste incluem:
-- **VITON HR Dataset**: Utilizado para treinar o modelo de segmentação de roupas.
-- **iMaterialist Fashion Dataset**: Utilizado para testar a segmentação de diversas peças de vestuário.
+- **VITON HR Dataset**: Utilizado para treinar o modelo de segmentação de roupas. ([VITON HR Dataset no Google Drive](https://drive.google.com/drive/folders/0B8kXrnobEVh9fnJHX3lCZzEtd20yUVAtTk5HdWk2OVV0RGl6YXc0NWhMOTlvb1FKX3Z1OUk?resourcekey=0-OIXHrDwCX8ChjypUbJo4fQ&usp=sharing))
+- **iMaterialist Fashion Dataset**: Utilizado para testar a segmentação de diversas peças de vestuário. ([Kaggle](https://www.kaggle.com/c/imaterialist-fashion-2019-FGVC6))
 
 ## Requisitos Atendidos
 
